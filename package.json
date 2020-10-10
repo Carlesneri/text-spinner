@@ -1,0 +1,26 @@
+{
+  "name": "text-spinner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vitalets/google-translate-api": "^4.0.0",
+    "axios": "^0.20.0",
+    "cheerio": "^1.0.0-rc.3",
+    "express": "^4.17.1",
+    "pdf-parse": "^1.1.1",
+    "synonyms": "^1.0.1",
+    "thesaurus-com": "^1.2.3",
+    "thesaurus-query": "^1.2.9"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
