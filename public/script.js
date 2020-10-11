@@ -31,7 +31,7 @@ async function spinText(){
 
     $finalText.innerHTML = joinWords(words)
 
-    const finalTextWords = $finalText.querySelectorAll('span')
+    const finalTextWords = $finalText.querySelectorAll('.spinned-word')
 
     finalTextWords.forEach(el => el.addEventListener('click', showSynonymsModal))
 
@@ -46,33 +46,56 @@ function joinWords(array){
     let joinedWords = ''
 
     array.forEach((word, i) => {
-        joinedWords += `<span data-id=${i}>${word} </span>`
-        // joinedWords += `<span class="word-to-change" data-id=${i}>${word} </span>`
+        joinedWords += `<span class="spinned-word" data-id=${i}>${word} </span>`
+
     })
 
     return joinedWords
 }
 
 async function showSynonymsModal(event){
+    event.stopPropagation()
+
+    let modal = document.querySelector(".modal")
+
+    if(modal) modal.remove()
+
+    document.body.addEventListener('click', event => {
+        event.stopPropagation()
+        if(modal) modal.remove()
+        
+    })
+
+    event.target.style.position = 'relative'
+
     const word = event.target.innerText
-    const modal = document.createElement('div')
+
+    modal = document.createElement('div')
+
     modal.classList.add("modal")
+
+    modal.setAttribute('contenteditable', 'false')
+
+    const dataId = event.target.dataset.id
+
+    modal.setAttribute('data-id', dataId)
     
     try {
         const synonyms = await getSynonyms(word)
 
-        console.log(synonyms)
+        // console.log(synonyms)
+        if(!synonyms.length) modal.innerHTML = `No synonyms found`
         
         synonyms.forEach(synonym => {
-            modal.innerHTML += `<div>${synonym}`
+            modal.innerHTML += `<div class="synonym">${synonym}</div>`
         
-        })        // modal.innerHTML = 
+        })        
     
-        event.target.append(modal)
-        // console.log(index)
-        // const target = document.querySelector(`[data-id="${index}"]`)
+        event.target.appendChild(modal)
 
-        // console.log(event.target)
+        modal.addEventListener('click', event => {
+            event.stopPropagation()
+        })
 
         
     } catch (error) {

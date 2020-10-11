@@ -1,0 +1,17 @@
+body{
+    min-width: 100vw;
+    min-height: 100vh;
+}
+.final-text{
+    margin: 2rem;
+    max-width: 90%;
+}
+.modal{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: #eee;
+    left: 0;
+    padding: 1rem;
+    z-index: 1;
+}
