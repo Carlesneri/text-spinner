@@ -3,13 +3,15 @@ const cheerio = require('cheerio')
 const translator = require('@vitalets/google-translate-api')
 const synonyms = require('synonyms')
 
-const synonymAPI = 'http://sesat.fdi.ucm.es:8080/servicios/rest/sinonimos/json/'
+// const synonymAPI = 'http://sesat.fdi.ucm.es:8080/servicios/rest/sinonimos/json/'
 
 const synonymURL = 'https://www.wordreference.com/sinonimos/'
 
 const upperCaseRegExp = /[A-Z]/
 
 async function getEspAltWords(word){
+
+    word = word.trim()
 
     const espAltWords = []
 
@@ -18,10 +20,17 @@ async function getEspAltWords(word){
         console.log(`Getting Esp synonyms of '${word}'`)
 
         let isUpperCase = false
+        
+        let isPlural = false
 
         if(upperCaseRegExp.test(word.charAt(0)) && !upperCaseRegExp.test(word.charAt(1))){
             word = word.toLowerCase()
             isUpperCase = true
+
+        }
+
+        if(word.charAt(word.length - 1) === 's'){
+            isPlural = true
 
         }
         
@@ -37,41 +46,19 @@ async function getEspAltWords(word){
             const colArr = collection.split(',')
 
             colArr.forEach(el => {
+                el = el.trim()
+
                 if(isUpperCase){
-                    el = el.trim()
                     el = el.charAt(0).toUpperCase() + el.slice(1)
 
-                    // console.log(el)
-                    
-                    espAltWords.push(el)
+                } 
 
-                } else {
-                    espAltWords.push(el.trim())
+                if(isPlural) el = el + 's'
 
-                }
+                espAltWords.push(el)
+
             })
         })
-
-        // if(data){
-        //     if(isUpperCase){
-        //         data.sinonimos.forEach(el => {
-        //             const firstLetter = el.sinonimo.charAt(0).toUpperCase()
-    
-        //             let upperCasedSynonym = Array.from(el.sinonimo)
-    
-        //             upperCasedSynonym[0] = firstLetter
-    
-        //             espAltWords.push(upperCasedSynonym.join(''))
-    
-        //         })
-        //     } else {
-        //         data.sinonimos.forEach(el => {
-        //             espAltWords.push(el.sinonimo)
-    
-        //         })
-        //     }
-
-        // }
 
     } catch (error) {
         console.error(error.message)

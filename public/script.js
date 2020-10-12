@@ -33,7 +33,7 @@ async function spinText(){
 
     const finalTextWords = $finalText.querySelectorAll('.spinned-word')
 
-    finalTextWords.forEach(el => el.addEventListener('click', showSynonymsModal))
+    finalTextWords.forEach(el => el.addEventListener('dblclick', showSynonymsModal))
 
 }
 
@@ -54,14 +54,13 @@ function joinWords(array){
 }
 
 async function showSynonymsModal(event){
-    event.stopPropagation()
 
     let modal = document.querySelector(".modal")
 
     if(modal) modal.remove()
 
     document.body.addEventListener('click', event => {
-        event.stopPropagation()
+        // event.stopPropagation()
         if(modal) modal.remove()
         
     })
@@ -89,9 +88,24 @@ async function showSynonymsModal(event){
         synonyms.forEach(synonym => {
             modal.innerHTML += `<div class="synonym">${synonym}</div>`
         
-        })        
-    
+        })     
+        
         event.target.appendChild(modal)
+
+        const $synonyms = document.querySelectorAll('.synonym')
+
+        // console.log($synonyms);
+
+        $synonyms.forEach(el => {
+            el.addEventListener('click', event => {
+                // event.stopPropagation()
+
+                console.log('synonym clicked')
+                modal.parentElement.innerHTML = event.target.innerText + ' '
+            })
+        })
+    
+
 
         modal.addEventListener('click', event => {
             event.stopPropagation()
