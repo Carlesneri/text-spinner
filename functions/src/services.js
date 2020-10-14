@@ -21,7 +21,7 @@ async function getEspAltWords(word){
 
         let isUpperCase = false
         
-        let isPlural = false
+        // let isPlural = false
 
         if(upperCaseRegExp.test(word.charAt(0)) && !upperCaseRegExp.test(word.charAt(1))){
             word = word.toLowerCase()
@@ -29,10 +29,10 @@ async function getEspAltWords(word){
 
         }
 
-        if(word.charAt(word.length - 1) === 's'){
-            isPlural = true
+        // if(word.charAt(word.length - 1) === 's'){
+        //     isPlural = true
 
-        }
+        // }
         
         let { data } = await axios.get(synonymURL + word)
 
@@ -53,7 +53,7 @@ async function getEspAltWords(word){
 
                 } 
 
-                if(isPlural) el = el + 's'
+                // if(isPlural) el = el + 's'
 
                 espAltWords.push(el)
 

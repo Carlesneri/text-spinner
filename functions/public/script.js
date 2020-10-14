@@ -5,6 +5,8 @@ const $finalText = document.getElementById('finalText')
 const spinBtn = document.getElementById('spinBtn')
 
 const synonymsURL = 'http://sesat.fdi.ucm.es:8080/servicios/rest/sinonimos/json/'
+
+const localhostURL = 'http://localhost:5000/text-spinner-279d4/us-central1/app'
 // window.addEventListener('click', (e) => {
 //     console.log(document.elementFromPoint(e.clientX, e.clientY))
 // })
@@ -99,9 +101,9 @@ async function showSynonymsModal(event){
         $synonyms.forEach(el => {
             el.addEventListener('click', event => {
                 // event.stopPropagation()
-
-                console.log('synonym clicked')
+                // console.log('synonym clicked')
                 modal.parentElement.innerHTML = event.target.innerText + ' '
+
             })
         })
     
