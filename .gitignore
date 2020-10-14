@@ -1,3 +1,5 @@
+node_ modules/
+
 # Logs
 logs
 *.log
