@@ -1,9 +1,8 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
-const translator = require('@vitalets/google-translate-api')
-const translate = require('translate')
+// const translator = require('@vitalets/google-translate-api')
 const synonyms = require('synonyms')
-require('dotenv').config()
+const translate = require('translate')
 
 translate.engine = "google"
 translate.key = process.env.API_KEY_GOOGLE_TRANSLATE

@@ -20,14 +20,22 @@ async function spinText(){
 
         // console.log('originalText', originalText);
     
-        const response = await fetch('http://localhost:3000' + '/translate', {
+        const response = await fetch(`${apiURL}/translate`, {
             method: 'POST',
             body: JSON.stringify({ originalText }),
             headers: {
                 'Content-Type': 'application/json' 
-            }
-            
+            }            
         })
+        
+        // const response = await fetch('http://localhost:3000' + '/translate', {
+        //     method: 'POST',
+        //     body: JSON.stringify({ originalText }),
+        //     headers: {
+        //         'Content-Type': 'application/json' 
+        //     }
+            
+        // })
     
         const {translatedText} = await response.json()
     
@@ -132,8 +140,8 @@ async function showSynonymsModal(event){
 
 async function getSynonyms(word){
     try {
-        const response = await fetch(`http://localhost:3000/altwords/${word}`)
-        // const response = await fetch(`${apiURL}/altwords/${word}`)
+        // const response = await fetch(`http://localhost:3000/altwords/${word}`)
+        const response = await fetch(`${apiURL}/altwords/${word}`)
 
         // console.log(synonyms)
         
