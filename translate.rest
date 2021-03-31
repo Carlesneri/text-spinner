@@ -1,0 +1,10 @@
+POST http://localhost:3000/translate HTTP/1.1
+content-type: application/json
+
+{
+    "originalText": "En la siguiente tabla, se muestran algunas situaciones comunes"
+}
+
+###
+
+GET http://localhost:3000/altwords/pelo HTTP/1.1

@@ -6,36 +6,45 @@ const spinBtn = document.getElementById('spinBtn')
 
 const synonymsURL = 'http://sesat.fdi.ucm.es:8080/servicios/rest/sinonimos/json/'
 
-const localhostURL = 'http://localhost:5000/text-spinner-279d4/us-central1/app'
-// window.addEventListener('click', (e) => {
+const apiURL = 'https://us-central1-text-spinner-279d4.cloudfunctions.net/app'
 //     console.log(document.elementFromPoint(e.clientX, e.clientY))
 // })
 
 spinBtn.addEventListener('click', spinText)
 
 async function spinText(){
-    const originalText = $originalText.value 
+    $finalText.innerHTML = 'Espineando...'
 
-    const response = await fetch('/translate', {
-        method: 'POST',
-        body: JSON.stringify({ originalText }),
-        headers: {
-            'Content-Type': 'application/json' 
-        }
-        
-    })
+    try {
+        const originalText = $originalText.value 
 
-    const {translatedText} = await response.json()
-
-    // console.log();
-
-    const words = getWords(translatedText)
-
-    $finalText.innerHTML = joinWords(words)
-
-    const finalTextWords = $finalText.querySelectorAll('.spinned-word')
-
-    finalTextWords.forEach(el => el.addEventListener('dblclick', showSynonymsModal))
+        // console.log('originalText', originalText);
+    
+        const response = await fetch('http://localhost:3000' + '/translate', {
+            method: 'POST',
+            body: JSON.stringify({ originalText }),
+            headers: {
+                'Content-Type': 'application/json' 
+            }
+            
+        })
+    
+        const {translatedText} = await response.json()
+    
+        // console.log();
+    
+        const words = getWords(translatedText)
+    
+        $finalText.innerHTML = joinWords(words)
+    
+        const finalTextWords = $finalText.querySelectorAll('.spinned-word')
+    
+        finalTextWords.forEach(el => el.addEventListener('dblclick', showSynonymsModal))
+    
+    } catch (error) {
+        $finalText.innerHTML = 'Ha habido un error'
+        console.error(error)
+    }
 
 }
 
@@ -123,13 +132,14 @@ async function showSynonymsModal(event){
 
 async function getSynonyms(word){
     try {
-        const response = await fetch(`/altwords/${word}`)
+        const response = await fetch(`http://localhost:3000/altwords/${word}`)
+        // const response = await fetch(`${apiURL}/altwords/${word}`)
 
         // console.log(synonyms)
         
         return await response.json()
 
     } catch (error) {
-        
+        console.error(error)
     }
 }

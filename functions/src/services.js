@@ -1,7 +1,12 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
 const translator = require('@vitalets/google-translate-api')
+const translate = require('translate')
 const synonyms = require('synonyms')
+require('dotenv').config()
+
+translate.engine = "google"
+translate.key = process.env.API_KEY_GOOGLE_TRANSLATE
 
 // const synonymAPI = 'http://sesat.fdi.ucm.es:8080/servicios/rest/sinonimos/json/'
 
@@ -113,7 +118,7 @@ async function getEngAltWords(word){
 
 function changeWords(text){
     // console.log(text)
-    let newText = text
+    let newText = text || ''
 
     let textInWords = text.split(' ')
 
@@ -143,23 +148,26 @@ function changeWords(text){
 
 
 async function translateToEng(text){
-    return translator(text, {
-        from: 'es',
-        to: 'en'
-    })
-    .then((res) =>  res.text)
-    .catch((error) => console.error(error))
+    // return translator(text, {
+    //     from: 'es',
+    //     to: 'en'
+    // })
+    // .then((res) =>  res.text)
+    // .catch((error) => console.error(error))
 
+    return await translate(text, {from: "es", to: "en"})
+    
 }
 
 async function translateToEsp(text){
-    return translator(text, {
-        from: 'en',
-        to: 'es'
-    })
-    .then((text) =>  text.text)
-    .catch((error) => console.error(error))
-
+    // return translator(text, {
+    //     from: 'en',
+    //     to: 'es'
+    // })
+    // .then((text) =>  text.text)
+    // .catch((error) => console.error(error))
+    
+    return await translate(text, {from: "en", to: "es"})
 }
 
 

@@ -13,7 +13,7 @@ ctrl.getAltWords = async (req, res) => {
     try {
         altWords = await getEspAltWords(req.params.word)
 
-        console.log(altWords)
+        // console.log(altWords)
 
         res.json(altWords)
     
@@ -29,15 +29,19 @@ ctrl.translate = async (req, res) => {
     try {
         const {originalText} = req.body
 
-        // console.log(originalText)
-
-        const engText = await translateToEng(originalText)
-
-        const newText = changeWords(engText)
-
-        const espText = await translateToEsp(newText)
+        // console.log('originalText', originalText)
+        
+        let engText = await translateToEng(originalText)
+        // console.log('engText', engText)
+        
+        let newText = changeWords(engText)
+        // console.log('newText', newText)
+        
+        let espText = await translateToEsp(newText)
+        // console.log('espText', espText)
         
         res.json({translatedText: espText})
+        // res.json({translatedText: 'espText'})
         
     } catch (error) {
         console.error(error)
